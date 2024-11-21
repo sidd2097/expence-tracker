@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Header from "./components/Header";
+import AddEntryForm from "./components/AddEntryForm";
+import EntriesList from "./components/EntriesList";
+import NetBalance from "./components/NetBalance";
 
-function App() {
+const App = () => {
+  const [entries, setEntries] = useState([]);
+
+  const addEntry = (entry) => {
+    setEntries([...entries, entry]);
+  };
+
+  const deleteEntry = (id) => {
+    setEntries(entries.filter((entry) => entry.id !== id));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <AddEntryForm addEntry={addEntry} />
+      <NetBalance entries={entries} />
+      <EntriesList entries={entries} deleteEntry={deleteEntry} />
     </div>
   );
-}
+};
 
 export default App;
